@@ -15,3 +15,6 @@ extension Date: ExpressibleByIntegerLiteral {
         self = formatter.date(from: String(value)) ?? Date()
     }
 }
+
+// let date1: Date = 2018_01_02
+
