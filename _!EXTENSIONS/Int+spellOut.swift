@@ -10,12 +10,11 @@ import UIKit
 extension Int {
     
     func getSpellOutStringFor(localeIdentifier identifier: String) -> String? {
-        
         let formatter = NumberFormatter()
         formatter.numberStyle = .spellOut
         formatter.locale =  Locale(identifier: identifier)
         
-        return formatter.string(from: self)
+        return formatter.string(from: NSNumber(value: self))
     }
     
     func getOrdinalStringFor(localeIdentifier identifier: String) -> String? {
@@ -23,6 +22,6 @@ extension Int {
         formatter.numberStyle = .ordinal
         formatter.locale =  Locale(identifier: identifier)
         
-        return formatter.string(from: self)
+        return formatter.string(from: NSNumber(value: self))
     }
 }
