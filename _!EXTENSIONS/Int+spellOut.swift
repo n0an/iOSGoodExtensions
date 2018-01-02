@@ -7,21 +7,37 @@
 
 import UIKit
 
-extension Int {
+extension SignedNumeric {
     
-    func getSpellOutStringFor(localeIdentifier identifier: String) -> String? {
+    func getSpellOutString(forLocaleIdentifier identifier: String? = nil) -> String? {
         let formatter = NumberFormatter()
         formatter.numberStyle = .spellOut
-        formatter.locale =  Locale(identifier: identifier)
         
-        return formatter.string(from: NSNumber(value: self))
+        if let identifier = identifier {
+            formatter.locale = Locale(identifier: identifier)
+        } else {
+            formatter.locale = Locale.current
+        }
+        
+        guard  let number = self as? NSNumber else { return "" }
+        return formatter.string(from: number)
     }
     
-    func getOrdinalStringFor(localeIdentifier identifier: String) -> String? {
+    func getOrdinalString(forLocaleIdentifier identifier: String? = nil) -> String? {
         let formatter = NumberFormatter()
-        formatter.numberStyle = .ordinal
-        formatter.locale =  Locale(identifier: identifier)
+        if #available(iOS 9.0, *) {
+            formatter.numberStyle = .ordinal
+        } else {
+            return ""
+        }
         
-        return formatter.string(from: NSNumber(value: self))
+        if let identifier = identifier {
+            formatter.locale = Locale(identifier: identifier)
+        } else {
+            formatter.locale = Locale.current
+        }
+        
+        guard  let number = self as? NSNumber else { return "" }
+        return formatter.string(from: number)
     }
 }
