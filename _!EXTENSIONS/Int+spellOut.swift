@@ -9,35 +9,24 @@ import UIKit
 
 extension SignedNumeric {
     
-    func getSpellOutString(forLocaleIdentifier identifier: String? = nil) -> String? {
+    public func spelledOutString(locale: Locale = .current) -> String? {
         let formatter = NumberFormatter()
+        formatter.locale = locale
         formatter.numberStyle = .spellOut
         
-        if let identifier = identifier {
-            formatter.locale = Locale(identifier: identifier)
-        } else {
-            formatter.locale = Locale.current
-        }
-        
-        guard  let number = self as? NSNumber else { return "" }
+        guard let number = self as? NSNumber else { return nil }
         return formatter.string(from: number)
     }
     
-    func getOrdinalString(forLocaleIdentifier identifier: String? = nil) -> String? {
-        let formatter = NumberFormatter()
-        if #available(iOS 9.0, *) {
+    public func ordinalString(locale: Locale = .current) -> String? {
+        if #available(iOS 9.0, macOS 10.11, *) {
+            let formatter = NumberFormatter()
+            formatter.locale = locale
             formatter.numberStyle = .ordinal
+            guard let number = self as? NSNumber else { return nil }
+            return formatter.string(from: number)
         } else {
             return ""
         }
-        
-        if let identifier = identifier {
-            formatter.locale = Locale(identifier: identifier)
-        } else {
-            formatter.locale = Locale.current
-        }
-        
-        guard  let number = self as? NSNumber else { return "" }
-        return formatter.string(from: number)
     }
 }
